@@ -2,7 +2,7 @@ class VideosController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:update_video_details]
 
   def new
-    uuid = SecureRandom.uuid
+    @uuid = SecureRandom.uuid
     @direct_upload_url = generate_mux_direct_upload_url(uuid)
   end
 
