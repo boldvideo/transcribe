@@ -2,7 +2,8 @@ class VideosController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:update_video_details]
 
   def new
-    @direct_upload_url, @uuid = generate_mux_direct_upload_url
+    uuid = SecureRandom.uuid
+    @direct_upload_url = generate_mux_direct_upload_url(uuid)
   end
 
   def create
@@ -30,14 +31,12 @@ class VideosController < ApplicationController
     
   end
 
-  def generate_mux_direct_upload_url
+  def generate_mux_direct_upload_url(uuid)
     MuxRuby.configure do |config|
       mux_credentials = Rails.application.credentials.dig(:mux)
       config.username = mux_credentials[:access_token_id]
       config.password = mux_credentials[:secret_key]
     end
-
-    uuid = SecureRandom.uuid
 
     uploads_api = MuxRuby::DirectUploadsApi.new
     create_asset_request = MuxRuby::CreateAssetRequest.new
@@ -56,7 +55,7 @@ class VideosController < ApplicationController
     logger.debug upload.data
     logger.debug upload.data.new_asset_settings
 
-    [upload.data.url, uuid]
+    upload.data.url
   end
 
   private
