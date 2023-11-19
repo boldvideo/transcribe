@@ -3,7 +3,7 @@ class VideosController < ApplicationController
 
   def new
     @uuid = SecureRandom.uuid
-    @direct_upload_url = generate_mux_direct_upload_url(uuid)
+    @direct_upload_url = generate_mux_direct_upload_url(@uuid)
   end
 
   def create
