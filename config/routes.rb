@@ -7,10 +7,12 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  resources :videos, only: [:new, :show]
+  root to: 'videos#new'
 
   post 'videos/create', to: 'videos#create'
   post 'videos/update_video_details', to: 'videos#update_video_details'
+
+  get '/:id', to: 'videos#show', constraints: { id: /[0-9a-fA-F\-]{36}/ }
 
   post 'mux', to: 'mux_webhooks#create'
   post '/transcription_callbacks', to: 'transcription_callbacks#create'

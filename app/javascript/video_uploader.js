@@ -28,7 +28,7 @@ function initUploader() {
 
     })
     uploader.addEventListener('success', function() {
-      window.location.href = `/videos/${videoId}`; // redirect to the show page
+      window.location.href = `/${videoId}`; // redirect to the show page
     });
   } else {
     console.log('no uploader')
