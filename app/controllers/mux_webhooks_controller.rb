@@ -35,9 +35,14 @@ class MuxWebhooksController < ApplicationController
         status: 'done'
       )
       if video.save
-        logger.debug("BROADCASTING ---- TO #{video.id}")
+        logger.debug("turned off broadcast")
+        #logger.debug("BROADCASTING ---- TO #{video.id}")
         # VideoChannel.broadcast_to(video, "TEST")
-        VideoChannel.broadcast_to(video, { status: video.status, playback_id: video.playback_id })
+        # video.broadcast_replace_to(video, { status: video.status, playback_id: video.playback_id })
+        Turbo::StreamsChannel.broadcast_replace_to(video, 
+                                                target: "video_player", 
+                                                partial: "videos/video_player",
+                                                locals: { video: video })
       end
     else
       logger.error "Video not found for UUID: #{uuid}"
@@ -61,6 +66,11 @@ class MuxWebhooksController < ApplicationController
     transcript_request_id = transcription_response['request_id']
 
     video.update(mp4_filename: mp4_file['name'], mp4_url: mp4_url, transcript_request_id: transcript_request_id, transcription_status: "transcribing")
+
+    Turbo::StreamsChannel.broadcast_replace_to(video, 
+                            target: "transcription_status", 
+                            partial: "videos/transcription_status",
+                            locals: { video: video })
 
     logger.debug("Video updated with mp4 and Transcript Request ID")
 

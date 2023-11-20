@@ -1,42 +1,8 @@
-<script type="module">
-  import { subscribeToVideo } from 'channels/video_channel'
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const videoId = "<%= @video.id %>";
-    console.log('DOM in show view is here', videoId)
-
-    subscribeToVideo("<%= @video.id %>", {
-      connected() {
-        console.log("connected to <%= @video.id %>")
-      },
-      disconnected() {
-        console.log('disconnected ')
-      },
-      received(data) {
-        if (data.status == 'done' && data.playback_id != null) {
-          showVideo(data.playback_id)
-        }
-        console.log('Received data:', data);
-      }
-    });
-  }); 
-
-  function showVideo(playbackId) {
-    const videoPlaceholder = document.getElementById('video-placeholder');
-    videoPlaceholder.innerHTML = '<mux-player stream-type="on-demand" playback-id="' + playbackId + '"></mux-player>';
-  }
-</script>
-<div>
-  <a href="/">Back</a>
+<div class="flex flex-col ">
+  <%= turbo_stream_from @video %>
+  <%= render 'video_player', video: @video %>
+  <%= render 'transcription_status', video: @video %>
 </div>
 
-<div id="video-placeholder">
-  <% if @video.status == 'done' %>
-    <mux-player
-        stream-type="on-demand"
-        playback-id="<%= @video.playback_id %>"
-        ></mux-player>
-  <% else %>
-    <p>Loading...</p>
-  <% end %>
-</div>
+

@@ -1,0 +1,12 @@
+<%= turbo_frame_tag "transcription_status" do %>
+  <% if video.transcription_status == 'ready' %>
+    Transcription ready.
+    <div id="download-links">
+      <a href="<%= video.json_transcription_url %>">Download JSON</a>
+      <a href="<%= video.webvtt_url %>">Download WebVTT</a>
+      <a href="<%= video.srt_url %>">Download SRT</a>
+    </div>
+  <% else %>
+    <%= video.transcription_status.titleize %>...
+  <% end %>
+<% end %>

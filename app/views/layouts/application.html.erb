@@ -19,7 +19,10 @@
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+    <header class="container mx-auto h-16 flex items-center">
+      <a href="/">transcribe.bold.video</a>
+    </header>
+    <main class="container mx-auto mt-4 px-5 flex flex-col">
       <%= yield %>
     </main>
     <script type="module">import "video_uploader"</script>

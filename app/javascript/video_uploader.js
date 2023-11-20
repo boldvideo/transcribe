@@ -1,8 +1,10 @@
+import { Turbo } from "@hotwired/turbo-rails"
+
 function initUploader() {
   const uploader = document.querySelector('mux-uploader');
   let videoId;
-  if (uploader) {
 
+  if (uploader) {
     videoId = uploader.dataset.uuid;
 
     uploader.addEventListener('uploadstart', function() {
@@ -20,21 +22,16 @@ function initUploader() {
         })
       }).then(response => {
         if (response.ok) {
-          console.log('video created')
         } else {
-          console.log('error', response)
+          console.error('error', response)
         }
       });
 
     })
     uploader.addEventListener('success', function() {
-      window.location.href = `/${videoId}`;
+      Turbo.visit(`/${videoId}`)
     });
-  } else {
-    console.log('no uploader')
   }
-
 }
 document.addEventListener('turbo:load', initUploader);
-document.addEventListener('DOMContentLoaded', initUploader);
 

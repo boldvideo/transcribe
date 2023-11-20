@@ -1,0 +1,10 @@
+<%= turbo_frame_tag "video_player" do %>
+  <% if video.status == 'done' %>
+    <mux-player
+        stream-type="on-demand"
+        playback-id="<%= video.playback_id %>"
+        ></mux-player>
+  <% else %>
+    <p>Loading...</p>
+  <% end %>
+<% end %>

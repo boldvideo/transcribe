@@ -25,6 +25,11 @@ class TranscriptionCallbacksController < ApplicationController
         transcription_status: 'ready'
       )
 
+      Turbo::StreamsChannel.broadcast_replace_to(video, 
+                              target: "transcription_status", 
+                              partial: "videos/transcription_status",
+                              locals: { video: video })
+
     else
       logger.error("Utterances missing in transcription: #{params}")
     end
