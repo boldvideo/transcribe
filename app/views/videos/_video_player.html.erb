@@ -1,10 +1,12 @@
-<%= turbo_frame_tag "video_player" do %>
-  <% if video.status == 'done' %>
-    <mux-player
-        stream-type="on-demand"
-        playback-id="<%= video.playback_id %>"
-        ></mux-player>
-  <% else %>
-    <p>Loading...</p>
-  <% end %>
+<%= turbo_frame_tag "video_player", class: "mb-6 rounded-xl overflow-hidden block bg-black aspect-video w-full flex items-center justify-center" do %>
+    <% if video.status == 'done' %>
+      <mux-player
+          stream-type="on-demand"
+          playback-id="<%= video.playback_id %>"
+          ></mux-player>
+    <% else %>
+      <div class="">
+        <p class="tracking-tight text-white text-2xl font-bold">Loading...</p>
+      </div>
+    <% end %>
 <% end %>

@@ -19,10 +19,13 @@
   </head>
 
   <body>
-    <header class="container mx-auto h-16 flex items-center">
-      <a href="/">transcribe.bold.video</a>
+    <header class="mx-auto h-14 flex justify-between items-center border-b border-gray-100 px-6 py-2">
+      <a href="/" class="h-full"><%= image_tag("logo.png", class: "h-full") %></a>
+      <a href="https://bold.video" class="text-xl font-bold tracking-tight hover:text-[#FF206E]">bold.video</a>
     </header>
-    <main class="container mx-auto mt-4 px-5 flex flex-col">
+    <main class="max-w-3xl mx-auto px-6 pt-4 flex flex-col">
+      <h2 class="text-4xl font-black tracking-tight mb-2 text-center">Transcribe Videos</h2>
+      <h3 class="text-2xl tracking-tight mb-6 text-center">100% Automatically and <span>Free</span></h3>
       <%= yield %>
     </main>
     <script type="module">import "video_uploader"</script>

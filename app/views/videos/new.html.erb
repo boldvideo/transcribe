@@ -1,6 +1,43 @@
+<style>
+
+.uploader-button {
+  padding: 6px 8px;
+  border: 1px solid #0d9488;
+  border-radius: 5px;
+  font-size: 24px;
+  color: #134e4a;
+  background: #99f6e4;
+  cursor: pointer;
+}
+mux-uploader {
+  --progress-bar-fill-color: #7e22ce;
+}
+
+mux-uploader-drop {
+  padding: 40px;
+  background-color: rgb(243 244 246);
+  border-radius: 12px;
+}
+mux-uploader-drop[active] {
+  background-color: #FF206E;
+}
+
+</style>
 <div class="flex flex-col" >
   <div>
-    <mux-uploader endpoint="<%= @direct_upload_url %>" data-uuid="<%= @uuid %>"></mux-uploader>
+    <mux-uploader-drop mux-uploader="video-uploader">
+      <mux-uploader 
+        no-drop 
+        endpoint="<%= @direct_upload_url %>" 
+        id="video-uploader" 
+        data-uuid="<%= @uuid %>"></mux-uploader>
+      <p slot="heading" class="text-2xl font-bold tracking-tight">
+        Drop your video file here!
+      </p>
+      <button class="uploader-button" type="button" slot="file-select">
+        Pick a file
+      </button>
+    </mux-uploader-drop>
   </div>
 </div>
 
