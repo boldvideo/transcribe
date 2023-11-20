@@ -75,4 +75,5 @@ Rails.application.configure do
   config.action_controller.raise_on_missing_callback_actions = true
 
   config.hosts << "bold.eu.ngrok.io"
+  config.action_cable.allowed_request_origins = ['https://bold.eu.ngrok.io', 'http://bold.eu.ngrok.io']
 end
