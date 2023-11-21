@@ -25,4 +25,5 @@ test:
 
 production:
   <<: *default
+  url: <%= ENV["DATABASE_URL"] %>
   database: bold_transcriber_prod

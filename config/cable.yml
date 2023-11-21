@@ -1,6 +1,6 @@
 development:
   adapter: async
-  allowed_request_origins: ["https://bold.eu.ngrok.io", "http://localhost:3000", "http://bold.eu.ngrok.io"]
+  allowed_request_origins: ["https://bold.eu.ngrok.io", "http://localhost:3000", "http://bold.eu.ngrok.io", "https://bold-transcribe.fly.dev", "https://transcribe.bold.video"]
 
 test:
   adapter: test
