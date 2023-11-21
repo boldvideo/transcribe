@@ -8,7 +8,9 @@ module Transcription
   DEEPGRAM_API_URL = 'https://api.deepgram.com/v1/listen?model=nova-2'
 
   def self.transcribe_audio(url)
-    callback_url = Rails.application.routes.url_helpers.transcription_callbacks_url(host: 'bold.eu.ngrok.io')
+    callback_url = Rails.application.routes.url_helpers.transcription_callbacks_url(
+      host: ENV['HOSTNAME'] || 'localhost:3000'
+    )
 
     uri = URI("#{DEEPGRAM_API_URL}&callback=#{CGI.escape(callback_url)}&utterances=true&smart_format=true")
     request = Net::HTTP::Post.new(uri)
