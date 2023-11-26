@@ -44,8 +44,8 @@ class TranscriptionCallbacksController < ApplicationController
   private
 
   def process_json_for_storage(json_data)
-    metadata = json_data['metadata']
+    metadata = json_data['transcription_callback']['metadata']
     metadata.slice!('created', 'duration', 'channels') if metadata
-    json_data
+    json_data['transcription_callback']
   end
 end
