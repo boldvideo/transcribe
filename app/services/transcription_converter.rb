@@ -4,7 +4,15 @@ module TranscriptionConverter
     raise "Utterances are required for WebVTT conversion."
   end
 
-    lines = ["WEBVTT", "", "NOTE", "Transcription provided by Deepgram", "Request Id: #{transcription['metadata']['request_id']}", "Created: #{transcription['metadata']['created']}", "Duration: #{transcription['metadata']['duration']}", "Channels: #{transcription['metadata']['channels']}", ""]
+    lines = [
+      "WEBVTT", 
+      "", 
+      "NOTE",
+      "Created: #{transcription['metadata']['created']}",
+      "Duration: #{transcription['metadata']['duration']}",
+      "Channels: #{transcription['metadata']['channels']}",
+      ""
+    ]
 
     transcription['results']['utterances'].each do |utterance|
       utterance['words'].each_slice(8) do |words|

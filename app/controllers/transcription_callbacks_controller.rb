@@ -10,11 +10,14 @@ class TranscriptionCallbacksController < ApplicationController
       s3_client = Aws::S3::Resource.new
       bucket = s3_client.bucket('bold-transcriber')
 
+      # cleanup json metadata
+      processed_json = process_json_for_storage(params.deep_dup)
+
       json_key = "transcripts/#{video.id}/transcript.json"
       vtt_key = "transcripts/#{video.id}/transcript.vtt"
       srt_key = "transcripts/#{video.id}/transcript.srt"
 
-      bucket.object(json_key).put(body: params.to_json)
+      bucket.object(json_key).put(body: processed_json.to_json)
       bucket.object(vtt_key).put(body: TranscriptionConverter.to_webvtt(params))
       bucket.object(srt_key).put(body: TranscriptionConverter.to_srt(params))
 
@@ -31,19 +34,18 @@ class TranscriptionCallbacksController < ApplicationController
         content: %(<turbo-stream action="redirect" href="#{show_json_path(video)}"></turbo-stream>)
       )
 
-      # Turbo::StreamsChannel.broadcast_replace_to(video, 
-      #                         target: "transcription_status", 
-      #                         partial: "videos/transcription_status",
-      #                         locals: { video: video })
-      # Turbo::StreamsChannel.broadcast_append_to(video, 
-      #                         target: "transcription_status", 
-      #                         action: :update, 
-      #                         content: turbo_stream_action_tag('redirect', url: show_json_path(video.id)))
-
     else
       logger.error("Utterances missing in transcription: #{params}")
     end
 
     head :ok 
+  end
+
+  private
+
+  def process_json_for_storage(json_data)
+    metadata = json_data['metadata']
+    metadata.slice!('created', 'duration', 'channels') if metadata
+    json_data
   end
 end
