@@ -34,4 +34,5 @@ function initUploader() {
   }
 }
 document.addEventListener('turbo:load', initUploader);
+// document.addEventListener('DOMContentLoaded', initUploader);
 
