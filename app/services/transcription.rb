@@ -12,7 +12,7 @@ module Transcription
       host: ENV['HOSTNAME'] || 'localhost:3000'
     )
 
-    uri = URI("#{DEEPGRAM_API_URL}&callback=#{CGI.escape(callback_url)}&utterances=true&smart_format=true")
+    uri = URI("#{DEEPGRAM_API_URL}&callback=#{CGI.escape(callback_url)}&utterances=true&smart_format=true&detect_language=true")
     request = Net::HTTP::Post.new(uri)
     request['Authorization'] = "Token #{Rails.application.credentials.deepgram[:api_key]}"
     request['Content-Type'] = 'application/json'
