@@ -2,12 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
-
 @layer components {
-  .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
+  .tab-button {
+    @apply text-gray-600 hover:text-gray-800 rounded-md px-3 py-2 text-sm font-medium;
+  }
+  .tab-button-active {
+    @apply bg-gray-200 text-gray-800 rounded-md px-3 py-2 text-sm font-medium;
   }
 }
 
-*/

@@ -25,10 +25,20 @@ class TranscriptionCallbacksController < ApplicationController
         transcription_status: 'ready'
       )
 
-      Turbo::StreamsChannel.broadcast_replace_to(video, 
-                              target: "transcription_status", 
-                              partial: "videos/transcription_status",
-                              locals: { video: video })
+      Turbo::StreamsChannel.broadcast_append_to(
+        video, 
+        target: "transcription_status",
+        content: %(<turbo-stream action="redirect" href="#{show_json_path(video)}"></turbo-stream>)
+      )
+
+      # Turbo::StreamsChannel.broadcast_replace_to(video, 
+      #                         target: "transcription_status", 
+      #                         partial: "videos/transcription_status",
+      #                         locals: { video: video })
+      # Turbo::StreamsChannel.broadcast_append_to(video, 
+      #                         target: "transcription_status", 
+      #                         action: :update, 
+      #                         content: turbo_stream_action_tag('redirect', url: show_json_path(video.id)))
 
     else
       logger.error("Utterances missing in transcription: #{params}")

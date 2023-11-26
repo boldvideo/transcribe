@@ -13,6 +13,11 @@ Rails.application.routes.draw do
   post 'videos/update_video_details', to: 'videos#update_video_details'
 
   get '/:id', to: 'videos#show', constraints: { id: /[0-9a-fA-F\-]{36}/ }
+  get '/:id/json', to: 'videos#show_json', as: 'show_json', constraints: { id: /[0-9a-fA-F\-]{36}/ }
+  get '/:id/webvtt', to: 'videos#show_webvtt', as: 'show_webvtt', constraints: { id: /[0-9a-fA-F\-]{36}/ }
+  get '/:id/srt', to: 'videos#show_srt', as: 'show_srt', constraints: { id: /[0-9a-fA-F\-]{36}/ }
+  get '/transcript', to: 'videos#transcript_content', as: 'transcript_content'
+
 
   post 'mux', to: 'mux_webhooks#create'
   post '/transcription_callbacks', to: 'transcription_callbacks#create'

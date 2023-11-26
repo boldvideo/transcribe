@@ -1,8 +1,7 @@
-
 <div class="flex flex-col ">
   <%= turbo_stream_from @video %>
   <%= render 'video_player', video: @video %>
-  <%= render 'transcription_status', video: @video %>
+  <%= render 'transcription_status', video: @video, active_tab: @active_tab %>
 </div>
 
 
